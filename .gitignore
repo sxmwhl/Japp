@@ -54,3 +54,4 @@ composer.lock
 .settings/
 test.php
 *.class
+bin/

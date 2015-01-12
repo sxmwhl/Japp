@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Test {
 	public static void main(String[] args) throws IOException {
@@ -21,9 +23,23 @@ public class Test {
 		OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
 		BufferedWriter bw = new BufferedWriter(osw);
 		String line = "";
+		int hangshu = 0;
+		int cishu=0;
 		while ((line = br.readLine()) != null) {
-			line=line+"dfsdf";
-			bw.write(line + "\r\n");
+			++hangshu;
+			String regEx="\\.\\d{3,10}"; 
+			Pattern pat=Pattern.compile(regEx);  
+			Matcher mat=pat.matcher(line);
+			StringBuffer sbs = new StringBuffer(); 			
+			while(mat.find()){
+				++cishu;			
+				String ss=mat.group();
+				String sb=ss.substring(0,3);
+				mat.appendReplacement(sbs, sb);  
+			}
+			mat.appendTail(sbs); 
+			line=sbs.toString();
+			bw.write(line + "\r\n");			
 		}
 		br.close();
 		isr.close();
@@ -31,6 +47,8 @@ public class Test {
 		bw.close();
 		osw.close();
 		fos.close();
+		System.out.println("¹²Ìæ»» "+hangshu+" ÐÐ "+cishu+" ´Î¡£");
+		System.out.println("======OVER=====");
 		return;
 	}
 }
